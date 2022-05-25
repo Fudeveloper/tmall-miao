@@ -1,6 +1,6 @@
 "ui";
 
-const VERSION = '2022618-6'
+const VERSION = '2022618-8'
 
 ui.layout(
     <frame>
@@ -19,15 +19,15 @@ ui.layout(
             {/* <button id="showQun" text="加入618活动助力群" /> */}
             {/* <button id="showQun2" text="加入内部优惠线报群" /> */}
             {/* <button id="feedback" text="正版发布地址！小心病毒盗版！" /> */}
-            <button id="checkUpdate" text="检查更新" />
+            <button id="checkUpdate" text="检查更新（需要联网）" />
             <text text="使用脚本有机率导致任务收益减少！本脚本仅供学习参考，请勿用于非法用途，使用脚本导致的任何可能结果与本人无关。请使用新版淘宝/京东运行，老版本部分任务会出现问题。" textStyle="bold|italic" textColor="red" textSize="18sp" />
             {/* <text text="部分机型无障碍权限授予部分可能出现bug，请关闭软件重新打开授予权限。" textStyle="italic" textColor="blue" /> */}
             {/* <text text="如果始终无法授予请重启手机尝试" /> */}
             <text text="使用说明" textColor="red" />
             <text text="1. 运行脚本之前建议按首先点击授予权限" />
             <text text="2. 脚本运行过程中按 音量减 即可强制停止" />
-            <text text="3. 部分每日任务需要手动完成" />
-            <text text="4. 运行前最好先将媒体音量关闭，直播任务可能会发出声音" />
+            {/* <text text="3. 部分每日任务需要手动完成" /> */}
+            {/* <text text="4. 运行前最好先将媒体音量关闭，直播任务可能会发出声音" /> */}
             {/* <text text="其他说明" textColor="red" />
             <text text="1. 本脚本基于Auto.JS（感谢原开发者）" />
             <text autoLink="web" text="2. 免费！基础代码全部开源！项目地址：https://github.com/MonsterNone/tmall-miao" /> */}
@@ -59,6 +59,8 @@ ui.layout(
             <button id="yushou" text="天猫618预售争霸赛" />
             <button id="rexiao" text="天猫热销爆款" />
             <button id="chaoshi" text="天猫超市，抢15元超市优惠券" />
+            <button id="jdChaoshi" text="京东超市，上午下单下午收货，领券满200-20" />
+            <button id="jdBaihuo" text="京东新百货，美妆居家钟表运动，送货上门正品保障" />
             <button id="hideHC" style="Widget.AppCompat.Button.Colored" text="隐藏" />
         </vertical> */}
     </frame>
@@ -216,6 +218,16 @@ ui.jdRexiao.click(function () {
 
 ui.jdYouhui.click(function () {
     const url = 'https://u.jd.com/JLbfhhN'
+    openJdUrl(url)
+})
+
+ui.jdChaoshi.click(function () {
+    const url = 'https://u.jd.com/JwSw88P'
+    openJdUrl(url)
+})
+
+ui.jdBaihuo.click(function () {
+    const url = 'https://u.jd.com/JISziRw'
     openJdUrl(url)
 })
 
