@@ -15,9 +15,9 @@ ui.layout(
             {/* <button id="caidan" text="5. 完成天猫开彩蛋任务" /> */}
             {/* <button id="butie" text="天猫百亿补贴会场，真补贴，真划算" /> */}
             {/* <button id="showHb" text="消灭红包！旧的不去新的不来！" textColor="red" /> */}
-            <button id="showHC" text="618大促会场直达" textColor="red" />
-            <button id="showQun" text="加入618活动助力群" />
-            <button id="showQun2" text="加入内部优惠线报群" />
+            {/* <button id="showHC" text="618大促会场直达" textColor="red" /> */}
+            {/* <button id="showQun" text="加入618活动助力群" /> */}
+            {/* <button id="showQun2" text="加入内部优惠线报群" /> */}
             {/* <button id="feedback" text="正版发布地址！小心病毒盗版！" /> */}
             <button id="checkUpdate" text="检查更新" />
             <text text="使用脚本有机率导致任务收益减少！本脚本仅供学习参考，请勿用于非法用途，使用脚本导致的任何可能结果与本人无关。请使用新版淘宝/京东运行，老版本部分任务会出现问题。" textStyle="bold|italic" textColor="red" textSize="18sp" />
@@ -28,14 +28,14 @@ ui.layout(
             <text text="2. 脚本运行过程中按 音量减 即可强制停止" />
             <text text="3. 部分每日任务需要手动完成" />
             <text text="4. 运行前最好先将媒体音量关闭，直播任务可能会发出声音" />
-            <text text="其他说明" textColor="red" />
+            {/* <text text="其他说明" textColor="red" />
             <text text="1. 本脚本基于Auto.JS（感谢原开发者）" />
-            <text autoLink="web" text="2. 免费！基础代码全部开源！项目地址：https://github.com/MonsterNone/tmall-miao" />
-            <text text="3. 由于调用淘宝打开页面，部分手机管家可能会误报为诱导软件，实际上本软件绝无任何病毒行为" />
+            <text autoLink="web" text="2. 免费！基础代码全部开源！项目地址：https://github.com/MonsterNone/tmall-miao" /> */}
+            <text text="由于调用淘宝打开页面，部分手机管家可能会误报为诱导软件，实际上本软件绝无任何病毒行为" />
             {/* <text text="4. 运行中出现bug请附上详细控制台log、页面截图等提交issue" /> */}
             <text id="ver" line="1" />
         </vertical>
-        <vertical id="qun" visibility="gone" bg="#ffffff">
+        {/* <vertical id="qun" visibility="gone" bg="#ffffff">
             <img id="jiaQun" src="file://res/qun.png" />
             <text text="互助QQ群：533943195，点击图片自动跳转手机QQ添加" textSize="20sp" gravity="center" />
             <button id="hideQun" style="Widget.AppCompat.Button.Colored" text="隐藏" />
@@ -44,7 +44,7 @@ ui.layout(
             <img id="jiaQun2" src="file://res/qun2.jpg" />
             <text text="线报QQ群：740725146，点击图片自动跳转手机QQ添加" textSize="20sp" gravity="center" />
             <button id="hideQun2" style="Widget.AppCompat.Button.Colored" text="隐藏" />
-        </vertical>
+        </vertical> */}
         {/* <vertical id="hb" visibility="gone" bg="#ffffff" paddingTop="50" paddingLeft="20" paddingRight="20">
             <text text="每日的红包使用掉，淘宝才会给你发新红包！5元惊喜红包不用完，绝对不会收到下一个5元！" textSize="18sp" textStyle="bold" textColor="red" />
             <button id="get" text="先领红包，不领咋有的用哈哈" />
@@ -52,8 +52,7 @@ ui.layout(
             <button id="big" text="大红包：官方补贴清单" />
             <button id="hideHb" style="Widget.AppCompat.Button.Colored" text="隐藏" />
         </vertical> */}
-        <vertical id="huichang" visibility="gone" bg="#ffffff" paddingTop="50" paddingLeft="20" paddingRight="20">
-            {/* <button id="jianhuo" text="618内部爆款清单" /> */}
+        {/* <vertical id="huichang" visibility="gone" bg="#ffffff" paddingTop="50" paddingLeft="20" paddingRight="20">
             <button id="jdHuichang" text="京东618主会场" />
             <button id="jdYouhui" text="京东618万券齐发会场，早鸟券包1分抢" />
             <button id="jdRexiao" text="京东618爆款清单，预售定金膨胀至高5倍" />
@@ -61,7 +60,7 @@ ui.layout(
             <button id="rexiao" text="天猫热销爆款" />
             <button id="chaoshi" text="天猫超市，抢15元超市优惠券" />
             <button id="hideHC" style="Widget.AppCompat.Button.Colored" text="隐藏" />
-        </vertical>
+        </vertical> */}
     </frame>
 )
 
@@ -270,7 +269,7 @@ function conPerReq() {
 
 function checkUpdate() {
     toast('正在检查更新')
-    const versionUrl = 'https://raw.fastgit.org/MonsterNone/tmall-miao/master/version'
+    const versionUrl = 'https://cdn.350800.xyz/cps/version'
     http.get(versionUrl, {}, function (res, err) {
         if (err) {
             toast('检查更新出错，请手动前往项目地址查看')
@@ -287,8 +286,8 @@ function checkUpdate() {
         if (version != VERSION) {
             var go = confirm("有新的版本，前往下载" + version, log)
             if (go) {
-                alert('如果打不开Github链接，请查看QQ群公告至蓝奏云下载')
-                app.openUrl('https://github.com/MonsterNone/tmall-miao/releases/latest')
+                alert('兰奏云链接：https://wwn.lanzouw.com/b02c4quch    密码:2333')
+                app.openUrl('https://wwn.lanzouw.com/b02c4quch')
             }
         } else {
             toast('当前为最新版')
