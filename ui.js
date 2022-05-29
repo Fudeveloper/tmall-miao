@@ -120,39 +120,39 @@ ui.startJDChoujiang.click(function () {
 //     engines.execScriptFile('./egg.js')
 // })
 
-ui.showQun.click(function () {
-    ui.main.visibility = 8
-    ui.qun.visibility = 0
-})
+// ui.showQun.click(function () {
+//     ui.main.visibility = 8
+//     ui.qun.visibility = 0
+// })
 
-ui.showQun2.click(function () {
-    ui.main.visibility = 8
-    ui.qun2.visibility = 0
-})
+// ui.showQun2.click(function () {
+//     ui.main.visibility = 8
+//     ui.qun2.visibility = 0
+// })
 
-ui.hideQun.click(function () {
-    ui.qun.visibility = 8
-    ui.main.visibility = 0
-})
+// ui.hideQun.click(function () {
+//     ui.qun.visibility = 8
+//     ui.main.visibility = 0
+// })
 
-ui.hideQun2.click(function () {
-    ui.qun2.visibility = 8
-    ui.main.visibility = 0
-})
+// ui.hideQun2.click(function () {
+//     ui.qun2.visibility = 8
+//     ui.main.visibility = 0
+// })
 
-ui.jiaQun.click(function () {
-    app.startActivity({
-        action: 'VIEW',
-        data: 'mqqapi://card/show_pslcard?src_type=internal&version=1&uin=533943195&card_type=group&source=qrcode'
-    })
-})
+// ui.jiaQun.click(function () {
+//     app.startActivity({
+//         action: 'VIEW',
+//         data: 'mqqapi://card/show_pslcard?src_type=internal&version=1&uin=533943195&card_type=group&source=qrcode'
+//     })
+// })
 
-ui.jiaQun2.click(function () {
-    app.startActivity({
-        action: 'VIEW',
-        data: 'mqqapi://card/show_pslcard?src_type=internal&version=1&uin=740725146&card_type=group&source=qrcode'
-    })
-})
+// ui.jiaQun2.click(function () {
+//     app.startActivity({
+//         action: 'VIEW',
+//         data: 'mqqapi://card/show_pslcard?src_type=internal&version=1&uin=740725146&card_type=group&source=qrcode'
+//     })
+// })
 
 // ui.feedback.click(function () {
 //     app.openUrl('https://github.com/monsternone/tmall-miao')
@@ -169,21 +169,22 @@ ui.jd.click(function() {
         positive: "京口令方式",
         negative: "默认方式"
     }).on("positive", ()=>{
-        setClip("88:/(KDyAu9isBQ)")
-        rawInput("已复制，部分机型限制剪贴板，可以手动复制", "88:/(KDyAu9isBQ)")
+        setClip("！NDIl8ApTah！")
+        rawInput("已复制，部分机型限制剪贴板，可以手动复制", "！NDIl8ApTah！")
         if (launch('com.jingdong.app.mall')) {
             toast('京口令已复制，打开京东App领取')
         } else {
             toast('京口令已复制，请手动打开京东App领取')
         }
     }).on("negative", ()=>{
-        const url = 'https://u.jd.com/JdHdlPN'
+        const url = ' https://u.jd.com/JwVDru5'
         openJdUrl(url)
     }).show()
 })
  
 ui.tb.click(function () {
-    const url = 'https://s.m.taobao.com/h5?q=秘密通道505'
+    // const url = 'https://s.m.taobao.com/h5?q=秘密通道505'
+    const url = 'https://m.tb.cn/h.fGiletV'
     openTbUrl(url)
 })
 
@@ -191,15 +192,15 @@ ui.tb.click(function () {
 //     ui.hb.visibility = 0
 // })
 
-ui.showHC.click(function () {
-    ui.main.visibility = 8
-    ui.huichang.visibility = 0
-})
+// ui.showHC.click(function () {
+//     ui.main.visibility = 8
+//     ui.huichang.visibility = 0
+// })
 
-ui.yushou.click(function () {
-    const url = 'https://s.m.taobao.com/h5?q=秘密通道505'
-    openTbUrl(url)
-})
+// ui.yushou.click(function () {
+//     const url = 'https://s.m.taobao.com/h5?q=秘密通道505'
+//     openTbUrl(url)
+// })
 
 // ui.jianhuo.click(function () {
 //     app.startActivity({
@@ -208,45 +209,45 @@ ui.yushou.click(function () {
 //     })
 // })
 
-ui.chaoshi.click(function () {
-    const url = 'https://m.tb.cn/h.fHizabu'
-    openTbUrl(url)
-})
+// ui.chaoshi.click(function () {
+//     const url = 'https://m.tb.cn/h.fHizabu'
+//     openTbUrl(url)
+// })
 
-ui.rexiao.click(function () {
-    const url = 'https://m.tb.cn/h.fGzYnPr'
-    openTbUrl(url)
-})
+// ui.rexiao.click(function () {
+//     const url = 'https://m.tb.cn/h.fGzYnPr'
+//     openTbUrl(url)
+// })
 
-ui.jdHuichang.click(function () {
-    const url = 'https://u.jd.com/JCbNy3t'
-    openJdUrl(url)
-})
+// ui.jdHuichang.click(function () {
+//     const url = 'https://u.jd.com/JCbNy3t'
+//     openJdUrl(url)
+// })
 
-ui.jdRexiao.click(function () {
-    const url = 'https://u.jd.com/JCb4AIS'
-    openJdUrl(url)
-})
+// ui.jdRexiao.click(function () {
+//     const url = 'https://u.jd.com/JCb4AIS'
+//     openJdUrl(url)
+// })
 
-ui.jdYouhui.click(function () {
-    const url = 'https://u.jd.com/JLbfhhN'
-    openJdUrl(url)
-})
+// ui.jdYouhui.click(function () {
+//     const url = 'https://u.jd.com/JLbfhhN'
+//     openJdUrl(url)
+// })
 
-ui.jdChaoshi.click(function () {
-    const url = 'https://u.jd.com/JwSw88P'
-    openJdUrl(url)
-})
+// ui.jdChaoshi.click(function () {
+//     const url = 'https://u.jd.com/JwSw88P'
+//     openJdUrl(url)
+// })
 
-ui.jdBaihuo.click(function () {
-    const url = 'https://u.jd.com/JISziRw'
-    openJdUrl(url)
-})
+// ui.jdBaihuo.click(function () {
+//     const url = 'https://u.jd.com/JISziRw'
+//     openJdUrl(url)
+// })
 
-ui.hideHC.click(function () {
-    ui.huichang.visibility = 8
-    ui.main.visibility = 0
-})
+// ui.hideHC.click(function () {
+//     ui.huichang.visibility = 8
+//     ui.main.visibility = 0
+// })
 
 // ui.hideHb.click(function () {
 //     ui.hb.visibility = 8
@@ -300,12 +301,15 @@ function checkUpdate() {
     const versionUrl = 'https://cdn.350800.xyz/cps/version'
     http.get(versionUrl, {}, function (res, err) {
         if (err) {
+            toast(err)
             toast('检查更新出错，请手动前往项目地址查看')
             return
         }
         try {
             res = res.body.json()
         } catch (err) {
+            toast(err)
+
             toast('检查更新出错，请手动前往项目地址查看')
             return
         }
