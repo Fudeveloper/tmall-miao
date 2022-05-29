@@ -7,7 +7,7 @@ if (!auto.service) {
 
 let showVersion = function () {
     console.log('当前版本：' + VERSION)
-    console.log('https://github.com/monsternone/tmall-miao')
+    // console.log('https://github.com/monsternone/tmall-miao')
     toast('当前版本：' + VERSION)
 }
 
