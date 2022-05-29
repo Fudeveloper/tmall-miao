@@ -1,15 +1,14 @@
+const VERSION = '2022618-16'
+
 if (!auto.service) {
     toast('无障碍服务未启动！退出！')
     exit()
 }
 
-let showVersion
-try {
-    showVersion = require('version.js').showVersion
-} catch(err) {
-    showVersion = function () {
-        console.log('无法加载version.js，获取版本失败。请前往https://github.com/monsternone/tmall-miao下载。')
-    }
+let showVersion = function () {
+    console.log('当前版本：' + VERSION)
+    console.log('https://github.com/monsternone/tmall-miao')
+    toast('当前版本：' + VERSION)
 }
 
 console.show()
@@ -65,7 +64,13 @@ function quit() {
 
 // 监听音量下键
 function registerKey() {
-    events.observeKey()
+    try {
+        events.observeKey()
+    } catch(err) {
+        console.log('监听音量键（用于停止脚本）失败，应该是无障碍权限出错，请关闭软件后台任务重新运行。')
+        console.log('如果还是不行可以重启手机尝试。')
+        quit()
+    }
     events.onKeyDown('volume_down', function (event) {
         console.log('京东任务脚本停止了')
         console.log('请手动切换回主页面')
@@ -154,7 +159,17 @@ function findTasks() {
         return false
     }
     console.log('打开任务列表')
-    anchor.parent().parent().parent().parent().child(1).click()
+    anchor = anchor.parent().parent().parent().parent()
+
+    if (anchor.childCount() == 8) { // 关闭弹窗
+        if (anchor.child(7).childCount() > 0) {
+            console.log('关闭弹窗')
+            anchor.child(7).child(0).child(0).child(0).child(3).click()
+            sleep(1000)
+        }
+    }
+
+    anchor.child(1).click()
     sleep(5000)
     let go = text('去完成').findOnce()
     if (!go) {
@@ -333,7 +348,7 @@ function openBox() {
         console.log('未能找到抽奖提示')
         return false
     }
-    let count = anchor.parent().child(1)
+    let count = anchor.parent().child(1).text()
     if (!parseInt(count)) {
         console.log('没有抽奖次数，返回')
         return true

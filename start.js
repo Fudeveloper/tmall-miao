@@ -1,20 +1,52 @@
+const VERSION = '2022618-16'
+
 if (!auto.service) {
     toast('无障碍服务未启动！退出！')
     exit()
 }
 
-let showVersion
-try {
-    showVersion = require('version.js').showVersion
-} catch (err) {
-    showVersion = function () {
-        console.log('无法加载version.js，获取版本失败。')
-    }
+let showVersion = function () {
+    console.log('当前版本：' + VERSION)
+    console.log('https://github.com/monsternone/tmall-miao')
+    toast('当前版本：' + VERSION)
 }
 
 // alert('请把手机放稳，不要摇晃！', '不然有时候会跳出合伙赢喵币，导致任务阻塞')
 
-if (confirm('是否需要自动调整媒体音量为0', '以免直播任务发出声音。需要修改系统设置权限。')) {
+function getSetting() {
+    let indices = []
+    autoOpen && indices.push(0)
+    autoMute && indices.push(1)
+
+    let settings = dialogs.multiChoice('任务设置', ['自动打开淘宝进入活动。多开或任务列表无法自动打开时取消勾选（注意，分身运行淘宝大概率导致任务收益变为100）', '自动调整媒体音量为0。以免直播任务发出声音，首次选择需要修改系统设置权限'], indices)
+
+    if (settings.length == 0) {
+        toast('取消选择，任务停止')
+        exit()
+    }
+
+    if (settings.indexOf(0) != -1) {
+        storage.put('autoOpen', true)
+        autoOpen = true
+    } else {
+        storage.put('autoOpen', false)
+        autoOpen = false
+    }
+    if (settings.indexOf(1) != -1) {
+        storage.put('autoMute', true)
+        autoMute = true
+    } else {
+        storage.put('autoMute', false)
+        autoMute = false
+    }
+}
+
+let storage = storages.create("tb_task");
+let autoOpen = storage.get('autoOpen', true)
+let autoMute = storage.get('autoMute', true)
+getSetting()
+
+if (autoMute) {
     try {
         device.setMusicVolume(0)
         toast('成功设置媒体音量为0')
@@ -22,8 +54,6 @@ if (confirm('是否需要自动调整媒体音量为0', '以免直播任务发�
         alert('首先需要开启权限，请开启后再次运行脚本')
         exit()
     }
-} else {
-    toast('不修改媒体音量')
 }
 
 console.show()
@@ -34,9 +64,15 @@ console.log('按音量下键停止')
 device.keepScreenDim(60 * 60 * 1000)
 
 function registerKey() {
-    events.observeKey()
+    try {
+        events.observeKey()
+    } catch(err) {
+        console.log('监听音量键停止失败，应该是无障碍权限出错，请关闭软件后台任务重新运行。')
+        console.log('如果还是不行可以重启手机尝试。')
+        quit()
+    }
     events.onKeyDown('volume_down', function (event) {
-        console.log('喵糖任务脚本停止了')
+        console.log('喵币任务脚本停止了')
         console.log('请手动切换回主页面')
         device.cancelKeepingAwake()
         exit()
@@ -79,7 +115,7 @@ try {
 
     // 查找任务按钮
     function findTask() {
-        var jumpButtonFind = textMatches(/去浏览|去搜索|去完成|签到|逛一逛|去逛逛|去观看|去参赛/) // 找进入任务的按钮，10秒
+        var jumpButtonFind = textMatches(/去浏览|去搜索|去完成|去签到|逛一逛|去逛逛|去观看|去参赛/) // 找进入任务的按钮，10秒
         var jumpButtons = findTimeout(jumpButtonFind, 10000)
 
         if (!jumpButtons) {
@@ -96,7 +132,7 @@ try {
                 continue
             }
             if (taskName) {
-                if (taskName.match(/签到/)) {
+                if (taskName.match(/签到领/)) {
                     console.log('进行签到任务')
                     sleep(1000)
                     jumpButtons[i].click()
@@ -120,21 +156,12 @@ try {
         //     }
         // }
 
-        textMatches(/.*浏览得奖励.*/).findOne(15000) // 等待开始
-
+        // textMatches(/.*浏览得奖励.*/).findOne(15000) // 等待开始
+        sleep(5000)
         let finish_c = 0
         while (finish_c < 50) { // 0.5 * 50 = 25 秒，防止死循环
-            let finish_reg = /.*完成.*|.*失败.*|.*上限.*|.*开小差.*|.*发放.*/
-            if (
-                (textMatches(finish_reg).exists() ||
-                    descMatches(finish_reg).exists() ||
-                    textContains('任务已完成').exists() ||
-                    textContains('喵币已发放').exists() ||
-                    descContains('任务已完成').exists() ||
-                    descContains('喵币已发放').exists()) &&
-                !text("浏览得奖励").exists()
-            ) // 等待已完成出现，有可能失败
-            {
+            let finish_reg = /.*任务已完成.*|.*失败.*|.*上限.*|.*开小差.*|.*喵币已发放.*/
+            if (textMatches(finish_reg).exists() || descMatches(finish_reg).exists()) { // 等待已完成出现，有可能失败
                 break
             }
             if (textMatches(/.*休息会呗.*/).exists()) {
@@ -158,27 +185,28 @@ try {
             // console.log('请手动切换回主页面')
             // device.cancelKeepingAwake()
             // quit()
-            return back()
+            back()
+            sleep(1000)
+            // TODO: 返回检测
+            if (!textContains('当前进度').findOne(5000)) {
+                console.log('似乎没有返回，二次尝试')
+                back()
+            }
+            return
         }
 
         console.log('任务完成，返回')
 
-        // if (currentActivity() == 'com.taobao.tao.TBMainActivity') {
-        //     var backButton = descContains('返回618列车').findOnce() // 有可能是浏览首页，有可能无法点击
-        //     if (backButton) {
-        //         if (!backButton.parent().parent().parent().click()) {
-        //             back()
-        //         }
-        //     } else {
-        //         back()
-        //     }
-        // } else {
-        //     back()
-        // }
         back()
-        if (!text('做任务赢奖励').findOne(5000)) {
-            console.log('似乎没有返回，二次尝试')
-            back()
+        sleep(1000)
+        if (!textContains('当前进度').findOne(5000)) {
+            if (currentActivity() == 'com.taobao.tao.TBMainActivity') {
+                console.log('返回到了主页，尝试重新进入任务')
+                id('com.taobao.taobao:id/rv_main_container').findOnce().child(3).child(0).click()
+            } else {
+                console.log('似乎没有返回，二次尝试')
+                back()
+            }
         }
     }
 
@@ -198,25 +226,31 @@ try {
         textMatches(/领喵币/).findOne(20000)
         console.log('准备打开任务列表')
         sleep(2000)
-        // if(click('关闭')) {
-        //     sleep(2000)
-        // }
         let c = findTextDescMatchesTimeout(/领喵币/, 1000)
         if (c) {
-            console.log('打开任务列表')
+            console.log('使用默认方法尝试打开任务列表')
             c.click()
         } else {
             throw '无法找到任务列表入口'
         }
-        if (!text('做任务赢奖励').findOne(8000)) {
+        if (!textContains('当前进度').findOne(8000)) {
             console.log('默认方式打开失败，二次尝试')
+            console.log('首先检测弹窗')
+            for (let i = 0; i < 2 && text('关闭').findOne(2000); i++) { // 关闭弹窗
+                console.log('检测到弹窗，关闭')
+                click('关闭')
+                sleep(2000)
+            }
+            console.log('出现未能自动关闭的弹窗请手动关闭')
+            sleep(2000)
             // let right = c.bounds().right
             // let left = c.bounds().left
             // let top = c.bounds().top
             // let bottom = c.bounds().bottom
             // click(random(right,left), random(top, bottom))
             click(c.bounds().centerX(), c.bounds().centerY())
-            if (!text('做任务赢奖励').findOne(8000)) {
+            console.log('已点击，等待任务列表出现')
+            if (!textContains('当前进度').findOne(8000)) {
                 throw '无法打开任务列表'
             }
         }

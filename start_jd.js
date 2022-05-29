@@ -1,15 +1,14 @@
+const VERSION = '2022618-16'
+
 if (!auto.service) {
     toast('无障碍服务未启动！退出！')
     exit()
 }
 
-let showVersion
-try {
-    showVersion = require('version.js').showVersion
-} catch(err) {
-    showVersion = function () {
-        console.log('无法加载version.js，获取版本失败。请前往https://github.com/monsternone/tmall-miao下载。')
-    }
+let showVersion = function () {
+    console.log('当前版本：' + VERSION)
+    console.log('https://github.com/monsternone/tmall-miao')
+    toast('当前版本：' + VERSION)
 }
 
 console.show()
@@ -80,7 +79,13 @@ function quit() {
 
 // 监听音量下键
 function registerKey() {
-    events.observeKey()
+    try {
+        events.observeKey()
+    } catch(err) {
+        console.log('监听音量键停止失败，应该是无障碍权限出错，请关闭软件后台任务重新运行。')
+        console.log('如果还是不行可以重启手机尝试。')
+        quit()
+    }
     events.onKeyDown('volume_down', function (event) {
         console.log('京东任务脚本停止了')
         console.log('请手动切换回主页面')
@@ -147,12 +152,16 @@ function getCoin() {
 // 打开任务列表
 function openTaskList() {
     console.log('打开任务列表')
-    let taskListButtons = findTextDescMatchesTimeout(/分红：.*份/, 20000)
+    let taskListButtons = findTextDescMatchesTimeout(/分红\+卡牌/, 20000)
     if (!taskListButtons) {
         console.log('未能打开任务列表，请关闭京东重新运行！')
         quit()
     }
-    taskListButtons = taskListButtons.parent().children()
+    if (taskListButtons.indexInParent() == 0) {
+        taskListButtons = taskListButtons.parent().parent().children()
+    } else {
+        taskListButtons = taskListButtons.parent().children()
+    }
 
     let taskListButton = null
     let flag = 0
